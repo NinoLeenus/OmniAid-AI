@@ -1,4 +1,4 @@
-# System Design – OmniAid AI (Reddit MVP)
+# System Design – OmniAid-AI (Reddit MVP)
 
 ## Architecture Overview
 The system uses a Retrieval-Augmented Generation (RAG) pipeline to ingest Reddit messages, classify them, and assist volunteers with structured guidance and draft responses.

@@ -1,5 +1,5 @@
 # Project Title
-OmniAid AI – Omnichannel Volunteer Message Intelligence System (Reddit MVP)
+OmniAid-AI – Omnichannel Volunteer Message Intelligence System (Reddit MVP)
 
 # Problem Statement
 Human rights NGOs and community organizations receive a high volume of distress messages across social platforms such as Reddit, WhatsApp, and Instagram. Volunteers struggle to:
