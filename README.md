@@ -1,43 +1,38 @@
-# OmniAid AI – Reddit Message Intelligence Prototype
+# OmniAid AI – Volunteer Message Intelligence System
 
-AI system to help NGOs manage large volumes of Reddit distress messages.
+AI system to help NGOs manage distress messages using open-source LLMs.
 
-## Features
-- Fetch Reddit messages
-- AI classification & urgency detection
-- Summary & draft response
-- Volunteer dashboard (human-in-loop)
+## Stack
+- Llama3 (Ollama)
+- FAISS Vector DB
+- Streamlit UI
+- SQLite
+- Hosted on AWS EC2
 
 ## Setup
 
-1. Install dependencies:
+1. Install Ollama:
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3
+
+2. Create .env file:
+REDDIT_CLIENT_ID=xxx
+REDDIT_CLIENT_SECRET=xxx
+
+3. Install dependencies:
 pip install -r requirements.txt
-
-2. Create Reddit App:
-https://www.reddit.com/prefs/apps
-
-3. Create .env file:
-REDDIT_CLIENT_ID=your_id
-REDDIT_CLIENT_SECRET=your_secret
 
 4. Run app:
-streamlit run app.py
+streamlit run app.py --server.address 0.0.0.0
 
 ## Ethics
-AI does not auto-send messages. Human approval required.
+Human-in-the-loop, no auto replies, privacy-first.
 
-### How to run in local
-git clone your-repo
-cd omniaid-ai-prototype
-pip install -r requirements.txt
-streamlit run app.py
 
-http://localhost:8501
-
-### How to deploy on AWS EC2 instance
+# How to deploy it on ec2 #####
 sudo apt update
-sudo apt install python3-pip
-pip3 install -r requirements.txt
-streamlit run app.py --server.port 8501 --server.address 0.0.0.0
+sudo apt install docker.io -y
+sudo systemctl start docker
 
-http://EC2_PUBLIC_IP:8501
+docker build -t omniaid-ai .
+docker run -p 8501:8501 omniaid-ai
