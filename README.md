@@ -1,38 +1,36 @@
-# OmniAid AI – Volunteer Message Intelligence System
+# OmniAid AI – Volunteer Decision Support System (AWS)
 
-AI system to help NGOs manage distress messages using open-source LLMs.
+This project uses AWS Generative AI and AWS infrastructure to help NGO volunteers manage large volumes of distress messages.
 
-## Stack
-- Llama3 (Ollama)
-- FAISS Vector DB
-- Streamlit UI
-- SQLite
-- Hosted on AWS EC2
+## AWS Services Used
+- Amazon Bedrock (Claude 3)
+- DynamoDB (processed messages)
+- S3 (raw message storage)
+- EC2 (Streamlit app hosting)
+
+## Features
+- Reddit message ingestion
+- AI classification & urgency detection
+- NGO knowledge retrieval (FAISS)
+- Volunteer dashboard
+- Human-in-the-loop
 
 ## Setup
-
-1. Install Ollama:
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull llama3
-
-2. Create .env file:
-REDDIT_CLIENT_ID=xxx
-REDDIT_CLIENT_SECRET=xxx
-
-3. Install dependencies:
-pip install -r requirements.txt
-
-4. Run app:
+1. Create DynamoDB table: processed_messages (PK: message_id)
+2. Create S3 bucket: omniaid-raw-messages
+3. Enable Bedrock access
+4. Set .env with Reddit credentials
+5. Run:
 streamlit run app.py --server.address 0.0.0.0
 
 ## Ethics
-Human-in-the-loop, no auto replies, privacy-first.
+No automated replies. All responses reviewed by volunteers.
 
-
-# How to deploy it on ec2 #####
-sudo apt update
-sudo apt install docker.io -y
-sudo systemctl start docker
-
-docker build -t omniaid-ai .
-docker run -p 8501:8501 omniaid-ai
+How AWS services are use
+Function	AWS Service
+LLM reasoning	Amazon Bedrock
+Message storage	Amazon S3
+Duplicate detection	DynamoDB
+Hosting	EC2
+Security	IAM
+Logs	CloudWatch
