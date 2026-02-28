@@ -10,11 +10,12 @@ reddit = praw.Reddit(
     user_agent="OmniAidAI"
 )
 
-def fetch_messages(limit=10):
-    messages = []
+def fetch_messages(limit=5):
+    msgs = []
     for msg in reddit.inbox.unread(limit=limit):
-        messages.append({
+        msgs.append({
+            "id": msg.id,
             "author": str(msg.author),
             "body": msg.body
         })
-    return messages
+    return msgs

@@ -7,3 +7,5 @@ faiss-cpu
 transformers
 torch
 python-dotenv
+requests
+sqlite-utils

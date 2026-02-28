@@ -1,26 +1,33 @@
 import streamlit as st
 from reddit_fetcher import fetch_messages
 from llm_processor import analyze_message
+from vector_store import load_vector_db
+from db import is_processed, mark_processed
 
-st.set_page_config(page_title="OmniAid AI", layout="wide")
+db = load_vector_db()
 
-st.title("🟢 OmniAid AI – Volunteer Message Intelligence System (Reddit MVP)")
-st.write("AI that helps volunteers handle distress messages")
+st.set_page_config(layout="wide")
+st.title("🟢 OmniAid AI – Volunteer Message Dashboard")
 
 if st.button("Fetch Reddit Messages"):
     messages = fetch_messages()
 
-    for i, msg in enumerate(messages):
-        st.subheader(f"Message {i+1} from {msg['author']}")
-        st.text(msg["body"])
+    for msg in messages:
+        if is_processed(msg["id"]):
+            continue
 
-        with st.spinner("Analyzing message with AI..."):
-            ai_result = analyze_message(msg["body"])
+        st.subheader(f"From: {msg['author']}")
+        st.write(msg["body"])
+
+        docs = db.similarity_search(msg["body"], k=2)
+        context = "\n".join([d.page_content for d in docs])
+
+        with st.spinner("Analyzing with AI..."):
+            result = analyze_message(msg["body"], context)
 
         st.markdown("### 🤖 AI Analysis")
-        st.write(ai_result)
+        st.text(result)
 
-        response = st.text_area("✍️ Edit Draft Response", ai_result, key=i)
-
-        if st.button(f"Approve & Mark Reviewed {i}"):
-            st.success("Response approved (manual send to Reddit)")
+        if st.button(f"Approve & Mark Done ({msg['id']})"):
+            mark_processed(msg["id"])
+            st.success("Marked as processed")

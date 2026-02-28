@@ -1,12 +1,30 @@
-from transformers import pipeline
-from prompts import CLASSIFY_PROMPT
+import requests
 
-classifier = pipeline("text2text-generation", model="google/flan-t5-small")
+def analyze_message(message, context):
+    prompt = f"""
+You are an NGO volunteer assistant.
 
-def analyze_message(message):
-    prompt = CLASSIFY_PROMPT.format(message=message)
+Context:
+{context}
 
-    result = classifier(prompt, max_length=256)[0]["generated_text"]
+Message:
+{message}
 
-    print(result)
-    return result
+Return in this format:
+Case Type:
+Urgency (High/Medium/Low):
+Summary:
+Draft Response (empathetic, no legal advice):
+"""
+
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": "llama3",
+            "prompt": prompt,
+            "stream": False
+        }
+    )
+
+    return response.json()["response"]
+    
