@@ -11,11 +11,11 @@ reddit = praw.Reddit(
 )
 
 def fetch_messages(limit=5):
-    msgs = []
+    messages = []
     for msg in reddit.inbox.unread(limit=limit):
-        msgs.append({
+        messages.append({
             "id": msg.id,
             "author": str(msg.author),
             "body": msg.body
         })
-    return msgs
+    return messages
