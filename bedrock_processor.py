@@ -1,7 +1,7 @@
 import boto3
 import json
 
-bedrock = boto3.client("bedrock-runtime", region_name="ap-south-1")
+bedrock = boto3.client("bedrock-runtime", region_name="ap-southeast-2")
 
 def analyze_message(message, context):
     prompt = f"""

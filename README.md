@@ -78,11 +78,9 @@ You should see:
 
 (venv) ubuntu@ip-xxx
 ✅ Step 4: Install dependencies
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 
-If error, try:
-
-pip install streamlit faiss-cpu sentence-transformers python-dotenv
 ✅ Step 5: Run Streamlit app
 streamlit run app.py --server.address 0.0.0.0 --server.port 8501
 
@@ -90,3 +88,5 @@ You should see:
 
 Running on:
 http://0.0.0.0:8501
+
+http://3.104.64.179:8501
