@@ -61,7 +61,15 @@ curl ifconfig.me
 
 That should show your EC2 public IP.
 
-✅ Step 2: Clone your repo on EC2
+✅ Step 2: Create virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate
+
+You should see:
+
+(venv) ubuntu@ip-xxx
+
+✅ Step 3: Clone your repo on EC2
 
 On EC2 terminal:
 
@@ -70,13 +78,6 @@ cd OmniAid-AI
 
 (or if already copied, just cd into folder)
 
-✅ Step 3: Create virtual environment (recommended)
-python3 -m venv venv
-source venv/bin/activate
-
-You should see:
-
-(venv) ubuntu@ip-xxx
 ✅ Step 4: Install dependencies
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
