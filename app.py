@@ -12,6 +12,7 @@ st.title("🟢 OmniAid AI – Volunteer Decision Support System (AWS)")
 
 if st.button("Fetch Reddit Messages"):
     messages = fetch_messages()
+    print(f"Fetched {len(messages)} messages")
 
     for msg in messages:
         if is_processed(msg["id"]):
