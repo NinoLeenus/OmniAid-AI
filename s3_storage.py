@@ -1,7 +1,7 @@
 import boto3
 import json
 
-s3 = boto3.client("s3")
+s3 = boto3.client("s3", region_name="ap-southeast-2")
 BUCKET = "omniaid-raw-messages"
 
 def store_raw_message(msg):
