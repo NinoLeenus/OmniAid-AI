@@ -21,6 +21,9 @@ This project uses AWS Generative AI and AWS infrastructure to help NGO volunteer
 3. Enable Bedrock access
 4. Set .env with Reddit credentials
 5. Run:
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 streamlit run app.py --server.address 0.0.0.0
 
 ## Ethics
