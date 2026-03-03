@@ -19,6 +19,7 @@ def fetch_messages(limit=5):
     # ============================
     # TEMP: Use mock messages
     # ============================
+    print ("Using mock messages for testing...")
     return mock_messages[:limit]
 
     # ============================
