@@ -20,31 +20,30 @@ Summary:
 Draft Response (empathetic, no legal advice):
 """
 
-    # Anthropic model code commented out below:
-    # body = json.dumps({
-    #     "anthropic_version": "bedrock-2023-05-31",
-    #     "max_tokens": 300,
-    #     "messages": [
-    #         {"role": "user", "content": prompt}
-    #     ]
-    # })
-    # response = bedrock.invoke_model(
-    #     modelId="anthropic.claude-3-sonnet-20240229-v1:0",
-    #     body=body
-    # )
-    # result = json.loads(response["body"].read())
-    # return result["content"][0]["text"]
+    body = {
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {"text": prompt}
+                ]
+            }
+        ],
+        "inferenceConfig": {
+            "maxTokens": 300,
+            "temperature": 0.7
+        }
+    }
 
-    # Use AWS Titan Text (nova2) model instead
-    body = json.dumps({
-        "inputText": prompt,
-        "maxTokens": 300,
-        "temperature": 0.7,
-        "topP": 0.9
-    })
     response = bedrock.invoke_model(
         modelId="amazon.nova-2-lite-v1:0",
-        body=body
+        body=json.dumps(body),
+        contentType="application/json",
+        accept="application/json"
     )
+
     result = json.loads(response["body"].read())
-    return result["results"][0]["outputText"]
+
+    # Extract text safely
+    output_text = result["output"]["message"]["content"][0]["text"]
+    return output_text
