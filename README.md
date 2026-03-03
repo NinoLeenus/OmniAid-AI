@@ -3,7 +3,7 @@
 This project uses AWS Generative AI and AWS infrastructure to help NGO volunteers manage large volumes of distress messages.
 
 ## AWS Services Used
-- Amazon Bedrock (AWS Bedrock's Titan Text (nova2) model (amazon.nova-2-lite-v1:0))
+- Amazon Bedrock (amazon.titan-text-lite-v1)
 - DynamoDB (processed messages)
 - S3 (raw message storage)
 - EC2 (Streamlit app hosting)
@@ -84,6 +84,9 @@ pip install -r requirements.txt
 
 ✅ Step 5: Run Streamlit app
 streamlit run app.py --server.address 0.0.0.0 --server.port 8501
+
+to kill port usage
+lsof -ti:8501 | xargs kill -9
 
 You should see:
 
