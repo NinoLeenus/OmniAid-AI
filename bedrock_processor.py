@@ -38,11 +38,9 @@ Draft Response (empathetic, no legal advice):
     # Use AWS Titan Text (nova2) model instead
     body = json.dumps({
         "inputText": prompt,
-        "textGenerationConfig": {
-            "maxTokenCount": 300,
-            "temperature": 0.7,
-            "topP": 0.9
-        }
+        "maxTokens": 300,
+        "temperature": 0.7,
+        "topP": 0.9
     })
     response = bedrock.invoke_model(
         modelId="amazon.nova-2-lite-v1:0",
