@@ -3,7 +3,7 @@ import json
 
 bedrock = boto3.client("bedrock-runtime", region_name="ap-southeast-2")
 
-INFERENCE_PROFILE_ARN = "arn:aws:bedrock:ap-southeast-2:123456789012:inference-profile/nova2-lite-profile"
+INFERENCE_PROFILE_ARN = "arn:aws:bedrock:ap-southeast-2:153876892719:inference-profile/nova2-lite-profile"
 
 def analyze_message(message, context):
 
