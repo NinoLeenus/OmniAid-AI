@@ -3,7 +3,7 @@
 This project uses AWS Generative AI and AWS infrastructure to help NGO volunteers manage large volumes of distress messages.
 
 ## AWS Services Used
-- Amazon Bedrock (AWS Bedrock's Titan Text (nova2) model (amazon.titan-text-lite-v1))
+- Amazon Bedrock (AWS Bedrock's Titan Text (nova2) model (amazon.nova-2-lite-v1:0))
 - DynamoDB (processed messages)
 - S3 (raw message storage)
 - EC2 (Streamlit app hosting)

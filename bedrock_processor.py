@@ -45,7 +45,7 @@ Draft Response (empathetic, no legal advice):
         }
     })
     response = bedrock.invoke_model(
-        modelId="amazon.titan-text-lite-v1",
+        modelId="amazon.nova-2-lite-v1:0",
         body=body
     )
     result = json.loads(response["body"].read())
