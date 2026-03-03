@@ -13,7 +13,8 @@ Context:
 Message:
 {message}
 
-Return in this format:
+Classify and respond in this format:
+
 Case Type:
 Urgency (High/Medium/Low):
 Summary:
@@ -21,29 +22,20 @@ Draft Response (empathetic, no legal advice):
 """
 
     body = {
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-                    {"text": prompt}
-                ]
-            }
-        ],
-        "inferenceConfig": {
-            "maxTokens": 300,
-            "temperature": 0.7
+        "inputText": prompt,
+        "textGenerationConfig": {
+            "maxTokenCount": 300,
+            "temperature": 0.7,
+            "topP": 0.9
         }
     }
 
     response = bedrock.invoke_model(
-        modelId="amazon.nova-2-lite-v1:0",
+        modelId="amazon.titan-text-lite-v1",
         body=json.dumps(body),
         contentType="application/json",
         accept="application/json"
     )
 
     result = json.loads(response["body"].read())
-
-    # Extract text safely
-    output_text = result["output"]["message"]["content"][0]["text"]
-    return output_text
+    return result["results"][0]["outputText"]
