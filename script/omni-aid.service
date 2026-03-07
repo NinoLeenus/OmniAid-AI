@@ -1,0 +1,13 @@
+[Unit]
+Description=OmniAid Streamlit App
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/OmniAid-AI
+EnvironmentFile=/home/ubuntu/OmniAid-AI/.env
+ExecStart=/home/ubuntu/OmniAid-AI/venv/bin/streamlit run app.py --server.address 0.0.0.0 --server.port 8501
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
