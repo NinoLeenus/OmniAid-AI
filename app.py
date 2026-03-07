@@ -34,8 +34,8 @@ if st.button("Fetch Reddit Messages"):
         st.write(f"**Ticket Number:** {ticket_id}")
         st.write(f"**Case Type:** {result['case_type']}")
         st.write(f"**Urgency:** {result['urgency']}")
-        st.write(f"**Summary:** {result['summary']}")
-        st.write(f"**Response:** {result['response']}")
+        st.markdown(f"**Summary:** {result.get('summary','')}")
+        st.markdown(f"**Response:** {result.get('response','')}")
 
         if st.button(f"Approve & Mark Done ({msg['id']})"):
             mark_processed(msg["id"])
