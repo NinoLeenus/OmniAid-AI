@@ -5,6 +5,7 @@ bedrock = boto3.client("bedrock-runtime", region_name="ap-southeast-2")
 
 INFERENCE_PROFILE_ARN = "arn:aws:bedrock:ap-southeast-2:153876892719:application-inference-profile/ozr3df6ffkl7"
 
+
 def analyze_message(message, context):
 
     prompt = f"""
@@ -16,20 +17,19 @@ Context:
 Message:
 {message}
 
-Return in this format:
-Case Type:
-Urgency (High/Medium/Low):
-Summary:
-Response:
+Return STRICTLY in this format:
+
+Case Type: <type>
+Urgency: <High/Medium/Low>
+Summary: <summary>
+Response: <response>
 """
 
     body = {
         "messages": [
             {
                 "role": "user",
-                "content": [
-                    {"text": prompt}
-                ]
+                "content": [{"text": prompt}]
             }
         ],
         "inferenceConfig": {
@@ -49,29 +49,34 @@ Response:
 
     result_text = result["output"]["message"]["content"][0]["text"]
 
-    # Parse the result
-    lines = result_text.strip().split('\n')
-    data = {}
-    current_key = None
+    # Default values to prevent KeyError
+    data = {
+        "case_type": "Unknown",
+        "urgency": "Unknown",
+        "summary": "Not generated",
+        "response": "Not generated"
+    }
+
+    lines = result_text.split("\n")
+
     for line in lines:
-        if ':' in line:
-            key, value = line.split(':', 1)
-            key = key.strip()
-            value = value.strip()
-            if key == 'Case Type':
-                data['case_type'] = value
-                current_key = 'case_type'
-            elif key.startswith('Urgency'):
-                data['urgency'] = value
-                current_key = 'urgency'
-            elif key == 'Summary':
-                data['summary'] = value
-                current_key = 'summary'
-            elif key == 'Response':
-                data['response'] = value
-                current_key = 'response'
-        else:
-            if current_key and line.strip():
-                data[current_key] += ' ' + line.strip()
+        if ":" not in line:
+            continue
+
+        key, value = line.split(":", 1)
+        key = key.strip().lower()
+        value = value.strip()
+
+        if "case type" in key:
+            data["case_type"] = value
+
+        elif "urgency" in key:
+            data["urgency"] = value
+
+        elif "summary" in key:
+            data["summary"] = value
+
+        elif "response" in key:
+            data["response"] = value
 
     return data
