@@ -29,8 +29,13 @@ if st.button("Fetch Reddit Messages"):
         with st.spinner("Analyzing with Amazon Bedrock..."):
             result = analyze_message(msg["body"], context)
 
-        st.markdown("### 🤖 AI Analysis")
-        st.text(result)
+        ticket_id = f"TICKET-{msg['id']}"
+        st.markdown("### Ticket Details")
+        st.write(f"**Ticket Number:** {ticket_id}")
+        st.write(f"**Case Type:** {result['case_type']}")
+        st.write(f"**Urgency:** {result['urgency']}")
+        st.write(f"**Summary:** {result['summary']}")
+        st.write(f"**Response:** {result['response']}")
 
         if st.button(f"Approve & Mark Done ({msg['id']})"):
             mark_processed(msg["id"])
