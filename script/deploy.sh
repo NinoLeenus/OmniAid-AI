@@ -42,7 +42,7 @@
 # pip install -r requirements.txt
 
 # copy systemd unit and enable the service
-#sudo cp "scripts/omni-aid.service" "/etc/systemd/system/$SERVICE_NAME.service"
+sudo cp "script/omni-aid.service" "/etc/systemd/system/$SERVICE_NAME.service"
 #sudo cp "./omni-aid.service" "/etc/systemd/system/$SERVICE_NAME.service"
 sudo systemctl daemon-reload
 sudo systemctl enable "$SERVICE_NAME"
