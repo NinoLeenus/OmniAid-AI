@@ -1,5 +1,4 @@
 streamlit
-praw
 boto3
 langchain
 langchain-community

@@ -16,7 +16,7 @@ This project uses AWS Generative AI and AWS infrastructure to help NGO volunteer
 - Human-in-the-loop
 
 ## Setup
-1. Create DynamoDB table: processed_messages (PK: message_id)
+1. Create DynamoDB table: OmniAidMessages (PK: message_id)
 2. Create S3 bucket: omniaid-raw-messages
 3. Enable Bedrock access
 4. Set `.env` with Telegram bot credentials (`TELEGRAM_BOT_TOKEN`)
