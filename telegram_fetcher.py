@@ -6,19 +6,29 @@ from urllib import error, request
 
 from dotenv import load_dotenv
 
-load_dotenv()
-
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
-ALLOWED_USER_IDS = os.getenv("TELEGRAM_ALLOWED_USER_IDS", "").strip()
-TOPIC_KEYWORDS = os.getenv("TELEGRAM_TOPIC_KEYWORDS", "").strip()
+PROJECT_ROOT = Path(__file__).resolve().parent
+load_dotenv(dotenv_path=PROJECT_ROOT / ".env")
 
 OFFSET_FILE = Path("data/telegram_offset.txt")
 
 
+def _bot_token() -> str:
+    return os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
+
+
+def _allowed_user_ids_raw() -> str:
+    return os.getenv("TELEGRAM_ALLOWED_USER_IDS", "").strip()
+
+
+def _topic_keywords_raw() -> str:
+    return os.getenv("TELEGRAM_TOPIC_KEYWORDS", "").strip()
+
+
 def _base_url() -> str:
-    if not TELEGRAM_BOT_TOKEN:
+    token = _bot_token()
+    if not token:
         raise ValueError("Missing TELEGRAM_BOT_TOKEN environment variable")
-    return f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
+    return f"https://api.telegram.org/bot{token}"
 
 
 def _api_call(method: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -47,10 +57,11 @@ def _api_call(method: str, payload: dict[str, Any]) -> dict[str, Any]:
 
 
 def _parse_allowed_user_ids() -> set[int]:
-    if not ALLOWED_USER_IDS:
+    raw = _allowed_user_ids_raw()
+    if not raw:
         return set()
     user_ids: set[int] = set()
-    for part in ALLOWED_USER_IDS.split(","):
+    for part in raw.split(","):
         part = part.strip()
         if not part:
             continue
@@ -59,9 +70,10 @@ def _parse_allowed_user_ids() -> set[int]:
 
 
 def _parse_keywords() -> tuple[str, ...]:
-    if not TOPIC_KEYWORDS:
+    raw = _topic_keywords_raw()
+    if not raw:
         return ()
-    return tuple(k.strip().lower() for k in TOPIC_KEYWORDS.split(",") if k.strip())
+    return tuple(k.strip().lower() for k in raw.split(",") if k.strip())
 
 
 def _read_offset() -> int | None:
