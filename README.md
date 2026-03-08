@@ -9,17 +9,17 @@ This project uses AWS Generative AI and AWS infrastructure to help NGO volunteer
 - EC2 (Streamlit app hosting)
 
 ## Features
-- Reddit message ingestion
+- Telegram message ingestion
 - AI classification & urgency detection
 - NGO knowledge retrieval (FAISS)
 - Volunteer dashboard
 - Human-in-the-loop
 
 ## Setup
-1. Create DynamoDB table: processed_messages (PK: message_id)
+1. Create DynamoDB table: OmniAidMessages (PK: message_id)
 2. Create S3 bucket: omniaid-raw-messages
 3. Enable Bedrock access
-4. Set .env with Reddit credentials
+4. Set `.env` with Telegram bot credentials (`TELEGRAM_BOT_TOKEN`)
 5. Run:
 python3 -m venv venv
 source venv/bin/activate
@@ -61,15 +61,7 @@ curl ifconfig.me
 
 That should show your EC2 public IP.
 
-✅ Step 2: Create virtual environment (recommended)
-python3 -m venv venv
-source venv/bin/activate
-
-You should see:
-
-(venv) ubuntu@ip-xxx
-
-✅ Step 3: Clone your repo on EC2
+✅ Step 2: Clone your repo on EC2
 
 On EC2 terminal:
 
@@ -77,6 +69,15 @@ git clone https://github.com/<your-username>/OmniAid-AI.git
 cd OmniAid-AI
 
 (or if already copied, just cd into folder)
+
+
+✅ Step 3: Create virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate
+
+You should see:
+
+(venv) ubuntu@ip-xxx
 
 ✅ Step 4: Install dependencies
 pip install torch --index-url https://download.pytorch.org/whl/cpu

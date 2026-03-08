@@ -1,3 +1,9 @@
 .git-credentials
 OminiAI-EC2.pem
 OmniAid-EC2.pem
+.env
+.env.*
+venv/
+.venv/
+__pycache__/
+*.pyc
